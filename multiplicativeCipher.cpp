@@ -22,27 +22,29 @@ int modInverse(int A, int M){
 }
 string encode(string pt,int k){
 	string ct = "";
-	for(int i=0;i<pt.length();i++){
+	for(int i=0;i<signed(pt.length());i++){
 		if(pt[i]!=' ')
-			ct+= 'a'+ (((int)pt[i]-97)*k)%26;
+			ct.push_back('a'+ ((pt[i]-97)*k)%26);
 		else
-			ct+=pt[i];
+			ct.push_back(pt[i]);
 	}
 	return ct;
 }
 string decode(string ct,int k){
 	string chk = "";
-	for(int i=0;i<ct.length();i++){
+	int modI = modInverse(k,26);
+	cout<<modI<<endl;
+	for(int i=0;i<signed(ct.length());i++){
 		if(ct[i]!=' ')
-			chk+='a' + (((int)ct[i]-97)%26*modInverse(k,26))%26;
+			chk.push_back('a' + ((ct[i]-97)*modI)%26);
 		else
-			chk+=ct[i];
+			chk.push_back(ct[i]);
 	}
 	return chk;
 }
 bool check(string pt, string chk){
 	if(pt.length()==chk.length()){
-		for(int i=0;i<pt.length();i++){
+		for(int i=0;i<signed(pt.length());i++){
 			if(pt[i]!=chk[i]){
 				return false;
 			}
@@ -74,6 +76,5 @@ int main(){
 		cout<<"Multiplicative Cipher done correctly\n";
 	else
 		cout<<"Multiplicative Cipher done wrongly\n";
-
 	return 0;
 }
